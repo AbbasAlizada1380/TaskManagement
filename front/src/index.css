@@ -1,68 +1,106 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("/ttf/Vazirmatn-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
+@font-face {
+  font-family: "Ray";
+  src: url("/font/Ray/Ray-ExtraBlack.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
-a:hover {
-  color: #535bf2;
+@font-face {
+  font-family: "Ray_black";
+  src: url("/font/Ray/Ray-Black.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Ray_text";
+  src: url("/font/Ray/Ray-Bold.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-  margin: 0;
+  font-family: "Vazirmatn", Arial, sans-serif;
+}
+@layer components {
+  .primary-btn {
+    @apply border-[#ED8D1D] border-2 dark:bg-primary hover:text-white hover:bg-green hover:border-green hover:!scale-105 text-green font-semibold py-2 px-4 rounded-full   duration-300;
+  }
+}
+@layer components {
+  .secondry-btn {
+    @apply bg-green hover:bg-green/90 text-sm text-white py-2 px-5 rounded-lg hover:!scale-105 duration-300;
+  }
+}
+@layer components {
+  .tertiary-btn {
+    @apply bg-red-500  hover:bg-red-600 text-sm text-white py-2 px-5 rounded-lg hover:!scale-105 duration-300;
+  }
+}
+
+/* Scrollbar styling for the main page */
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #00513a;
+  border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #8a93a7;
+}
+
+/* custome style for paganition on  */
+.custom-pagination .swiper-pagination-bullet {
+  @apply w-4 h-1.5 bg-gray-500 rounded-full transition-all  duration-300;
+}
+
+.custom-pagination .swiper-pagination-bullet-active {
+  @apply w-6 h-1.5 bg-[#02DB81] scale-110;
+}
+
+#bill-content {
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: center;
+  width: 148mm; /* A5 width in portrait */
+  height: 210mm; /* A5 height in portrait */
+  padding: 0;
+  font-family: "Vazirmatn", Arial, sans-serif;
+  background: white;
+  color: black;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
+/* Print Styles */
+@media print {
+  body * {
+    visibility: hidden;
+  }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
+  #bill-content,
+  #bill-content * {
+    visibility: visible;
+  }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+  /* #bill-content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+  } */
 }
