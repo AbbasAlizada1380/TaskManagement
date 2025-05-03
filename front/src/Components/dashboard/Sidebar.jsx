@@ -38,22 +38,22 @@ const Sidebar = ({ setActiveComponent }) => {
 
 const AllComponents = [
   { name: "Home", value: "home", icon: <Home /> },
-  { name: "Shopkeepers", value: "Shopkeepers", icon: <ShoppingBagIcon /> },
-  { name: "Contracts", value: "Agreements", icon: <FaBuilding /> },
+  { name: "AddingTasks", value: "AddingTasks", icon: <ShoppingBagIcon /> },
+  { name: "PickingTasks", value: "PickingTasks", icon: <FaBuilding /> },
   {
-    name: "Services",
-    value: "ServiceManager",
+    name: "OfficeNotes",
+    value: "OfficeNotes",
     icon: <MdLocalLaundryService />,
   },
-  { name: "Rent", value: "RentManger", icon: <GiTakeMyMoney /> },
-  { name: "Employees", value: "StafFManager", icon: <FaUserGear /> },
-  { name: "Salaries", value: "Salaries", icon: <FaBuilding /> },
-  { name: "Expenses", value: "Expenses", icon: <MdLocalLaundryService /> },
-  { name: "Incomes", value: "Incomes", icon: <GiTakeMyMoney /> },
-  { name: "Units", value: "Blockes", icon: <FaHome /> },
-  { name: "Unit Services", value: "BlockesServices", icon: <FaServicestack /> },
-  { name: "Register New User", value: "CreateUsers", icon: <FaBuilding /> },
-  { name: "Sign Out", value: "signout", icon: <FaSignOutAlt /> },
+  { name: "PersonalNotes", value: "PersonalNotes", icon: <GiTakeMyMoney /> },
+  // { name: "Employees", value: "StafFManager", icon: <FaUserGear /> },
+  // { name: "Salaries", value: "Salaries", icon: <FaBuilding /> },
+  // { name: "Expenses", value: "Expenses", icon: <MdLocalLaundryService /> },
+  // { name: "Incomes", value: "Incomes", icon: <GiTakeMyMoney /> },
+  // { name: "Units", value: "Blockes", icon: <FaHome /> },
+  // { name: "Unit Services", value: "BlockesServices", icon: <FaServicestack /> },
+  // { name: "Register New User", value: "CreateUsers", icon: <FaBuilding /> },
+  // { name: "Sign Out", value: "signout", icon: <FaSignOutAlt /> },
 ];
 
 
