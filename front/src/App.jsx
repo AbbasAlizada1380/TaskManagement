@@ -6,7 +6,7 @@ import "./App.css";
 import About from "./Pages/About";
 import Bill from "./Components/Bill_Page/Bill";
 import Services from "./Pages/Services";
-import Dashboard from "./Components/dashboard/dashboard";
+import Dashboard from "./Components/dashboard/DashboardPage";
 import Loginpage from "./Components/loginpage/loginpage";
 import NotFound from "./Pages/NotFound";
 import ContactUs from "./Pages/ContactUs";
@@ -20,24 +20,23 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Layout />}>
+        {/* <Route path="/" element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogCardDetails />} />
           <Route path="/category/:categoryName" element={<CategoryPage />} />
-          {/* New route */}
           <Route path="/service" element={<Services />} />
           <Route path="/services/:id" element={<ServiceDetails />} />
           <Route path="/contactus" element={<ContactUs />} />
           <Route path="/about" element={<About />} />
-        </Route>
+        </Route> */}
 
-        <Route path="*" element={<NotFound />} />
-        <Route path="/bill" element={<Bill />} />
-        <Route path="/dashboard" element={<Dashboard role="Designer" />} />
+        {/* <Route path="*" element={<NotFound />} />
+        <Route path="/bill" element={<Bill />} /> */}
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Loginpage />} />
-        <Route path="/forgot-password/" element={<ForgotPassword />} />
-        <Route path="/create-new-password/" element={<CreateNewPassword />} />
+        {/* <Route path="/forgot-password/" element={<ForgotPassword />} />
+        <Route path="/create-new-password/" element={<CreateNewPassword />} /> */}
       </Routes>
     </BrowserRouter>
   );
