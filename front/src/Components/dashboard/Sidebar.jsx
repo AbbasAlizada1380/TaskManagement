@@ -10,7 +10,13 @@ import { MdLocalLaundryService } from "react-icons/md";
 import { LuActivity, LuCable } from "react-icons/lu";
 import { FaUserGear } from "react-icons/fa6";
 import { IoMdSettings } from "react-icons/io";
-import { Home, ShoppingBagIcon } from "lucide-react";
+import {
+  Check,
+  Home,
+  NotebookTabsIcon,
+  Plus,
+  ShoppingBagIcon,
+} from "lucide-react";
 
 const Sidebar = ({ setActiveComponent }) => {
   const [selectedC, setSelectedC] = useState("home");
@@ -36,26 +42,30 @@ const Sidebar = ({ setActiveComponent }) => {
     });
   };
 
-const AllComponents = [
-  { name: "Home", value: "home", icon: <Home /> },
-  { name: "AddingTasks", value: "AddingTasks", icon: <ShoppingBagIcon /> },
-  { name: "PickingTasks", value: "PickingTasks", icon: <FaBuilding /> },
-  {
-    name: "OfficeNotes",
-    value: "OfficeNotes",
-    icon: <MdLocalLaundryService />,
-  },
-  { name: "PersonalNotes", value: "PersonalNotes", icon: <GiTakeMyMoney /> },
-  // { name: "Employees", value: "StafFManager", icon: <FaUserGear /> },
-  // { name: "Salaries", value: "Salaries", icon: <FaBuilding /> },
-  // { name: "Expenses", value: "Expenses", icon: <MdLocalLaundryService /> },
-  // { name: "Incomes", value: "Incomes", icon: <GiTakeMyMoney /> },
-  // { name: "Units", value: "Blockes", icon: <FaHome /> },
-  // { name: "Unit Services", value: "BlockesServices", icon: <FaServicestack /> },
-  // { name: "Register New User", value: "CreateUsers", icon: <FaBuilding /> },
-  // { name: "Sign Out", value: "signout", icon: <FaSignOutAlt /> },
-];
+  const AllComponents = [
+    { name: "Home", value: "home", icon: <Home /> },
+    { name: "Adding Tasks", value: "AddingTasks", icon: <Plus /> },
+    { name: "Picking Tasks", value: "PickingTasks", icon: <Check /> },
 
+    {
+      name: "Office Notes",
+      value: "Office Notes",
+      icon: <NotebookTabsIcon />,
+    },
+    {
+      name: "Personal Notes",
+      value: "PersonalNotes",
+      icon: <NotebookTabsIcon />,
+    },
+    // { name: "Employees", value: "StafFManager", icon: <FaUserGear /> },
+    // { name: "Salaries", value: "Salaries", icon: <FaBuilding /> },
+    // { name: "Expenses", value: "Expenses", icon: <MdLocalLaundryService /> },
+    // { name: "Incomes", value: "Incomes", icon: <GiTakeMyMoney /> },
+    // { name: "Units", value: "Blockes", icon: <FaHome /> },
+    // { name: "Unit Services", value: "BlockesServices", icon: <FaServicestack /> },
+    // { name: "Register New User", value: "CreateUsers", icon: <FaBuilding /> },
+    // { name: "Sign Out", value: "signout", icon: <FaSignOutAlt /> },
+  ];
 
   return (
     <div
@@ -66,8 +76,8 @@ const AllComponents = [
           <img src="/logo.png" alt="Logo" className="h-10 w-10" />
         </div>
 
-        <span className="text-lg font-semibold  text-white whitespace-nowrap">
-          مارکیت حسین زاده
+        <span className="text-lg font-semibold text-white whitespace-nowrap">
+          Task Manager of TET
         </span>
       </header>
 
