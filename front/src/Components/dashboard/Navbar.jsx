@@ -30,9 +30,9 @@ const Navbar = () => {
                 {formattedDate}
               </span>
             </div>
-            <div className="flex flex-col text-xl items-center justify-center leading-tight">
+            {/* <div className="flex flex-col text-xl items-center justify-center leading-tight">
               <CountdownTimer />
-            </div>
+            </div> */}
           </div>
         </div>
       </nav>

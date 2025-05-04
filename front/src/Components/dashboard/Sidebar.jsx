@@ -49,7 +49,7 @@ const Sidebar = ({ setActiveComponent }) => {
 
     {
       name: "Office Notes",
-      value: "Office Notes",
+      value: "OfficeNotes",
       icon: <NotebookTabsIcon />,
     },
     {
