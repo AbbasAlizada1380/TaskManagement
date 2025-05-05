@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const AddingTasks = () => {
   const [formData, setFormData] = useState({
@@ -16,48 +16,88 @@ const AddingTasks = () => {
   const [draggedIndex, setDraggedIndex] = useState(null);
   const [dragging, setDragging] = useState(false);
   const [dragPosition, setDragPosition] = useState({ x: 0, y: 0 });
+  const [editingTaskId, setEditingTaskId] = useState(null);
+
+  const BASE_URL = import.meta.env.VITE_BASE_URL;
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    setTasks([...tasks, formData]); // Add to local state
-    setFormData({
-      dutyOf: "",
-      description: "",
-      project: "",
-      priority: "",
-      status: "",
-      maxTime: "",
-      category: "",
-      notes: "",
-    });
+    const data = {
+      title: formData.dutyOf,
+      description: formData.description,
+      project: formData.project,
+      category: formData.category,
+      status: formData.status,
+      priority:formData.priority,
+      user: formData.dutyOf, // You can adjust this if dynamic
+      updatedAt: new Date(),
+    };
+    try {
+      const res = await fetch(`${BASE_URL}/api/tasks`, {
+        method: editingTaskId ? "PUT" : "POST", // Use PUT for update
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!res.ok) throw new Error("Failed to submit task");
+
+      const savedTask = await res.json();
+
+      if (editingTaskId) {
+        setTasks(
+          tasks.map((task) => (task.id === savedTask.id ? savedTask : task))
+        ); // Update task in the list
+      } else {
+        setTasks([...tasks, savedTask]); // Add the saved task to the UI
+      }
+
+      setFormData({
+        dutyOf: "",
+        description: "",
+        project: "",
+        priority: "",
+        status: "",
+        maxTime: "",
+        category: "",
+        notes: "",
+      });
+      setEditingTaskId(null); // Reset editing state
+    } catch (error) {
+      console.error("Error submitting task:", error);
+    }
+  };
+
+  const fetchTasks = async () => {
+    try {
+      const res = await fetch(`${BASE_URL}/api/tasks`);
+      if (!res.ok) throw new Error("Failed to fetch tasks");
+      const data = await res.json();
+      setTasks(data);
+    } catch (error) {
+      console.error("Error fetching tasks:", error);
+    }
   };
 
   const handleMouseDown = (e, index) => {
     setDraggedIndex(index);
     setDragging(true);
-
-    // Start dragging, set the initial position
     const { clientX, clientY } = e;
     setDragPosition({ x: clientX, y: clientY });
-
-    // Prevent text selection during dragging
     document.body.style.userSelect = "none";
   };
 
   const handleMouseMove = (e) => {
     if (!dragging || draggedIndex === null) return;
 
-    // Calculate how much the mouse has moved
     const { clientX, clientY } = e;
     const diffX = clientX - dragPosition.x;
     const diffY = clientY - dragPosition.y;
 
-    // Update the position of the dragged task
     setDragPosition({ x: clientX, y: clientY });
 
     const updatedTasks = [...tasks];
@@ -75,17 +115,57 @@ const AddingTasks = () => {
   const handleMouseUp = () => {
     setDragging(false);
     setDraggedIndex(null);
-
-    // Allow text selection again after dragging
     document.body.style.userSelect = "auto";
   };
+
+  const handleEdit = (task) => {
+    setFormData({
+      dutyOf: task.title,
+      description: task.description,
+      project: task.project,
+      priority: task.priority,
+      status: task.status,
+      maxTime: task.maxTime,
+      category: task.category,
+      notes: task.notes,
+    });
+    setEditingTaskId(task.id); // Set editing task ID
+  };
+
+  const handleDelete = async (taskId) => {
+    try {
+      const response = await fetch(
+        `${BASE_URL}/${taskId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json", // Ensure the right header
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete task");
+      }
+
+      // Handle successful deletion
+      console.log("Task deleted successfully");
+    } catch (error) {
+      console.error("Error deleting task:", error);
+      // Handle the error accordingly
+    }
+  };
+
+  useEffect(() => {
+    fetchTasks();
+  }, []);
 
   return (
     <div
       className="container mx-auto relative"
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp} // Stop dragging when the mouse leaves the container
+      onMouseLeave={handleMouseUp}
     >
       <h1 className="text-2xl md:text-3xl font-bold text-center mb-6 text-gray-800">
         Tasks Form
@@ -123,28 +203,21 @@ const AddingTasks = () => {
           type="submit"
           className="md:col-span-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
         >
-          Submit Task
+          {editingTaskId ? "Update Task" : "Submit Task"}
         </button>
       </form>
 
       <h2 className="text-xl font-semibold mb-4">Tasks</h2>
-      <div className="flex flex-wrap gap-4 relative">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {tasks.length === 0 && (
-          <p className="text-gray-500">No tasks available.</p>
+          <p className="text-gray-500 col-span-full">No tasks available.</p>
         )}
-        {tasks.map((task, index) => (
+        {tasks.map((task) => (
           <div
-            key={index}
-            className="w-60 bg-white shadow-md rounded p-4 cursor-move border border-gray-200"
-            onMouseDown={(e) => handleMouseDown(e, index)} // Listen for mouse down event to start dragging
-            style={{
-              position: "absolute",
-              left: task.position?.x || 0,
-              top: task.position?.y || 0,
-              userSelect: "none", // Prevent text selection while dragging
-            }}
+            key={task.id}
+            className="bg-white shadow-md rounded p-4 border border-gray-200"
           >
-            <h3 className="font-bold text-blue-600 mb-1">{task.dutyOf}</h3>
+            <h3 className="font-bold text-blue-600 mb-1">{task.title}</h3>
             <p className="text-sm text-gray-700 mb-1">
               <strong>Project:</strong> {task.project}
             </p>
@@ -160,7 +233,27 @@ const AddingTasks = () => {
             <p className="text-sm text-gray-700 mb-1">
               <strong>Category:</strong> {task.category}
             </p>
+            <p className="text-sm text-gray-700 mb-1">
+              <strong>Created at:</strong> {task.createdAt}
+            </p>
+            <p className="text-sm text-gray-700 mb-1">
+              <strong>Updated at:</strong> {task.updatedAt}
+            </p>
             <p className="text-xs text-gray-500 mt-2">{task.description}</p>
+            <div className="flex justify-between mt-4">
+              <button
+                onClick={() => handleEdit(task)}
+                className="text-blue-600 hover:text-blue-800"
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(task.id)}
+                className="text-red-600 hover:text-red-800"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
