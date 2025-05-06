@@ -124,13 +124,10 @@ const AddingTasks = () => {
         className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10"
       >
         {[
+          { name: "user", label: "Duty of" },
           { name: "title", label: "Title" },
           { name: "description", label: "Description" },
           { name: "project", label: "Project" },
-          { name: "status", label: "Status" },
-          { name: "category", label: "Category" },
-          { name: "note", label: "Note" },
-          { name: "user", label: "User" },
         ].map(({ name, label }) => (
           <div key={name} className="flex flex-col">
             <label className="text-gray-700 font-medium mb-1">{label}</label>
@@ -143,7 +140,6 @@ const AddingTasks = () => {
             />
           </div>
         ))}
-
         {/* Priority dropdown */}
         <div className="flex flex-col">
           <label className="text-gray-700 font-medium mb-1">Priority</label>
@@ -155,12 +151,11 @@ const AddingTasks = () => {
             required
           >
             <option value="">Select Priority</option>
-            <option value="HIGH">HIGH</option>
-            <option value="MEDIUM">MEDIUM</option>
-            <option value="LOW">LOW</option>
+            <option value="HIGH">High</option>
+            <option value="MEDIUM">Medium</option>
+            <option value="LOW">Low</option>
           </select>
         </div>
-
         {/* maxTime datetime picker */}
         <div className="flex flex-col">
           <label className="text-gray-700 font-medium mb-1">Max Time</label>
@@ -172,7 +167,37 @@ const AddingTasks = () => {
             className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
           />
         </div>
-
+        {/* Status dropdown */}
+        <div className="flex flex-col">
+          <label className="text-gray-700 font-medium mb-1">Status</label>
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          >
+            <option value="">Select Status</option>
+            <option value="PENDING">Pending</option>
+            <option value="PROCESSING">Processing</option>
+            <option value="COMPLETE">Complete</option>
+            <option value="CANCELED">Canceled</option>
+          </select>
+        </div>{" "}
+        <div className="flex flex-col">
+          <label className="text-gray-700 font-medium mb-1">Category</label>
+          <select
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            className="border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+            required
+          >
+            <option value="">Select category</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+          </select>
+        </div>
         <button
           type="submit"
           className="md:col-span-2 bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
@@ -191,7 +216,7 @@ const AddingTasks = () => {
               key={task.id}
               className="bg-white shadow-md rounded p-4 border border-gray-200"
             >
-              <h3 className="font-bold text-blue-600 mb-1">{task.title}</h3>
+              <h3 className="font-bold text-blue-600 mb-1">{task.user}</h3>
               <p className="text-sm text-gray-700 mb-1">
                 <strong>Project:</strong> {task.project}
               </p>
@@ -202,7 +227,7 @@ const AddingTasks = () => {
                 <strong>Status:</strong> {task.status}
               </p>
               <p className="text-sm text-gray-700 mb-1">
-                <strong>Time:</strong> {task.maxTime}
+                <strong>Max time:</strong> {task.maxTime}
               </p>
               <p className="text-sm text-gray-700 mb-1">
                 <strong>Category:</strong> {task.category}
