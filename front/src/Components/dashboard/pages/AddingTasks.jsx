@@ -214,41 +214,47 @@ const AddingTasks = () => {
           tasks.map((task) => (
             <div
               key={task.id}
-              className="bg-white shadow-md rounded p-4 border border-gray-200"
+              className={`shadow-md rounded p-4 border ${
+                task.priority === "HIGH"
+                  ? "bg-red-500"
+                  : task.priority === "MEDIUM"
+                  ? "bg-yellow-500"
+                  : "bg-green"
+              } text-white`} // Ensures all text is white and readable
             >
-              <h3 className="font-bold text-blue-600 mb-1">{task.user}</h3>
-              <p className="text-sm text-gray-700 mb-1">
+              <h3 className="font-bold mb-1">User: {task.user}</h3>
+              <p className="text-sm mb-1">
                 <strong>Project:</strong> {task.project}
               </p>
-              <p className="text-sm text-gray-700 mb-1">
+              <p className="text-sm mb-1">
                 <strong>Priority:</strong> {task.priority}
               </p>
-              <p className="text-sm text-gray-700 mb-1">
+              <p className="text-sm mb-1">
                 <strong>Status:</strong> {task.status}
               </p>
-              <p className="text-sm text-gray-700 mb-1">
+              <p className="text-sm mb-1">
                 <strong>Max time:</strong> {task.maxTime}
               </p>
-              <p className="text-sm text-gray-700 mb-1">
+              <p className="text-sm mb-1">
                 <strong>Category:</strong> {task.category}
               </p>
-              <p className="text-sm text-gray-700 mb-1">
+              <p className="text-sm mb-1">
                 <strong>Created:</strong> {task.createdAt}
               </p>
-              <p className="text-sm text-gray-700 mb-1">
+              <p className="text-sm mb-1">
                 <strong>Updated:</strong> {task.updatedAt}
               </p>
-              <p className="text-xs text-gray-500 mt-2">{task.description}</p>
+              <p className="text-xs mt-2">{task.description}</p>
               <div className="flex justify-between mt-4">
                 <button
                   onClick={() => handleEdit(task)}
-                  className="text-blue-600 hover:text-blue-800"
+                  className="text-blue-100 hover:text-blue-300"
                 >
                   Edit
                 </button>
                 <button
                   onClick={() => handleDelete(task.id)}
-                  className="text-red-600 hover:text-red-800"
+                  className="text-red-100 hover:text-red-300"
                 >
                   Delete
                 </button>
