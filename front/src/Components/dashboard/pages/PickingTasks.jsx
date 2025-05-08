@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 const PickingTasks = () => {
@@ -8,7 +9,7 @@ const PickingTasks = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/api/tasks`); // Replace with your actual base URL if needed
+      const response = await axios.get(`${BASE_URL}/api/tasks`);
       setTasks(response.data);
     } catch (error) {
       console.error("Failed to fetch tasks:", error);
@@ -21,13 +22,35 @@ const PickingTasks = () => {
     fetchTasks();
   }, []);
 
-  const handlePickTask = (taskId) => {
-    setTasks((prevTasks) =>
-      prevTasks.map((task) =>
-        task.id === taskId ? { ...task, picked: !task.picked } : task
-      )
-    );
+  const updateTaskStatus = async (task, newStatus) => {
+    const updatedTask = { ...task, status: newStatus };
+
+    try {
+      await axios.put(`${BASE_URL}/api/tasks/${task.id}`, updatedTask);
+      setTasks((prevTasks) =>
+        prevTasks.map((t) => (t.id === task.id ? updatedTask : t))
+      );
+    } catch (error) {
+      console.error(`Failed to update task to ${newStatus}:`, error);
+    }
   };
+
+  const confirmAndUpdateStatus = (task, status, label) => {
+    Swal.fire({
+      title: `Are you sure you want to mark this task as ${label}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: `Yes, mark as ${label}`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+        updateTaskStatus(task, status);
+        Swal.fire("Updated!", `Task marked as ${label}.`, "success");
+      }
+    });
+  };
+
   if (loading) return <p className="text-center">Loading tasks...</p>;
 
   return (
@@ -47,8 +70,11 @@ const PickingTasks = () => {
                 : task.priority === "MEDIUM"
                 ? "bg-yellow-500"
                 : "bg-green"
-            } text-white`} // Ensures all text is white and readable
+            } text-white`}
           >
+            <h3 className="font-extrabold font-serif text-2xl mb-1">
+              {task.title.toUpperCase()}
+            </h3>
             <h3 className="font-bold mb-1">User: {task.user}</h3>
             <p className="text-sm mb-1">
               <strong>Project:</strong> {task.project}
@@ -72,18 +98,31 @@ const PickingTasks = () => {
               <strong>Updated:</strong> {task.updatedAt}
             </p>
             <p className="text-xs mt-2">{task.description}</p>
-            <div className="flex justify-between mt-4">
+
+            <div className="flex flex-wrap justify-between gap-2 mt-4">
               <button
-                onClick={() => handleEdit(task)}
-                className="text-blue-100 hover:text-blue-300"
+                onClick={() =>
+                  confirmAndUpdateStatus(task, "PROCESSING", "Processing")
+                }
+                className="bg-blue-600 px-2 py-1 rounded hover:bg-blue-700"
               >
-                Edit
+                Pick
               </button>
               <button
-                onClick={() => handleDelete(task.id)}
-                className="text-red-100 hover:text-red-300"
+                onClick={() =>
+                  confirmAndUpdateStatus(task, "CANCELED", "Canceled")
+                }
+                className="bg-yellow-600 px-2 py-1 rounded hover:bg-yellow-700"
               >
-                Delete
+                Cancel
+              </button>
+              <button
+                onClick={() =>
+                  confirmAndUpdateStatus(task, "COMPLETED", "Completed")
+                }
+                className="bg-lime-700 px-2 py-1 rounded hover:bg-green-700"
+              >
+                Done
               </button>
             </div>
           </div>

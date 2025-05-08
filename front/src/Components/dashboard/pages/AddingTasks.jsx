@@ -32,6 +32,8 @@ const AddingTasks = () => {
     };
 
     try {
+      console.log(payload);
+
       const res = await fetch(
         `${BASE_URL}/api/tasks${editingTaskId ? `/${editingTaskId}` : ""}`,
         {
@@ -207,61 +209,65 @@ const AddingTasks = () => {
       </form>
 
       <h2 className="text-xl font-semibold mb-4">Tasks</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        {tasks.length === 0 ? (
-          <p className="text-gray-500 col-span-full">No tasks available.</p>
-        ) : (
-          tasks.map((task) => (
-            <div
-              key={task.id}
-              className={`shadow-md rounded p-4 border ${
-                task.priority === "HIGH"
-                  ? "bg-red-500"
-                  : task.priority === "MEDIUM"
-                  ? "bg-yellow-500"
-                  : "bg-green"
-              } text-white`} // Ensures all text is white and readable
-            >
-              <h3 className="font-bold mb-1">User: {task.user}</h3>
-              <p className="text-sm mb-1">
-                <strong>Project:</strong> {task.project}
-              </p>
-              <p className="text-sm mb-1">
-                <strong>Priority:</strong> {task.priority}
-              </p>
-              <p className="text-sm mb-1">
-                <strong>Status:</strong> {task.status}
-              </p>
-              <p className="text-sm mb-1">
-                <strong>Max time:</strong> {task.maxTime}
-              </p>
-              <p className="text-sm mb-1">
-                <strong>Category:</strong> {task.category}
-              </p>
-              <p className="text-sm mb-1">
-                <strong>Created:</strong> {task.createdAt}
-              </p>
-              <p className="text-sm mb-1">
-                <strong>Updated:</strong> {task.updatedAt}
-              </p>
-              <p className="text-xs mt-2">{task.description}</p>
-              <div className="flex justify-between mt-4">
-                <button
-                  onClick={() => handleEdit(task)}
-                  className="text-blue-100 hover:text-blue-300"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={() => handleDelete(task.id)}
-                  className="text-red-100 hover:text-red-300"
-                >
-                  Delete
-                </button>
-              </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {tasks.map((task) => (
+          <div
+            key={task.id}
+            className={`shadow-md rounded p-4 border ${
+              task.priority === "HIGH"
+                ? "bg-red-500"
+                : task.priority === "MEDIUM"
+                ? "bg-yellow-500"
+                : "bg-green"
+            } text-white`}
+          >
+            <h3 className="font-extrabold font-serif text-2xl mb-1">
+              {task.title.toUpperCase()}
+            </h3>
+            <h3 className="font-bold mb-1">User: {task.user}</h3>
+            <p className="text-sm mb-1">
+              <strong>Project:</strong> {task.project}
+            </p>
+            <p className="text-sm mb-1">
+              <strong>Priority:</strong> {task.priority}
+            </p>
+            <p className="text-sm mb-1">
+              <strong>Status:</strong> {task.status}
+            </p>
+            <p className="text-sm mb-1">
+              <strong>Max time:</strong> {task.maxTime}
+            </p>
+            <p className="text-sm mb-1">
+              <strong>Category:</strong> {task.category}
+            </p>
+            <p className="text-sm mb-1">
+              <strong>Created:</strong> {task.createdAt}
+            </p>
+            <p className="text-sm mb-1">
+              <strong>Updated:</strong> {task.updatedAt}
+            </p>
+            <p className="text-xs mt-2">{task.description}</p>
+
+            <div className="flex flex-wrap justify-between gap-2 mt-4">
+              <button
+                onClick={() =>
+                  handleEdit(task)
+                }
+                className="bg-blue-600 px-2 py-1 rounded hover:bg-blue-700"
+              >
+                edite
+              </button>
+              <button
+                onClick={() =>
+                  handleDelete(task.id)
+                }
+                className="bg-red-800 px-2 py-1 rounded hover:bg-green-700"
+              >
+                Delete
+              </button>
             </div>
-          ))
-        )}
+          </div>
+        ))}
       </div>
     </div>
   );
