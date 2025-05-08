@@ -957,16 +957,6 @@ const FinancialReports = () => {
             </button>
           </div>
         </div>
-        {error && (
-          <div className="mt-4 p-3 bg-red-50 border border-red-300 text-red-700 rounded-lg text-sm shadow-sm">
-            <p className="font-semibold mb-1">خطا:</p>
-            {error.split("\n").map((errLine, index) => (
-              <pre key={index} className="whitespace-pre-wrap text-xs">
-                {errLine}
-              </pre>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* Summary Cards Section */}
@@ -976,7 +966,7 @@ const FinancialReports = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                مجموع عواید
+                Total Tasks
               </p>
               <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
                 {isLoading && !summaryData.totalRevenue ? (
@@ -996,7 +986,7 @@ const FinancialReports = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                مجموع مصارف
+               Pending Tasks
               </p>
               <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
                 {isLoading && !summaryData.totalExpenses && !error ? (
@@ -1016,7 +1006,7 @@ const FinancialReports = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                سود / زیان خالص
+              Processing Tasks
               </p>
               <h3
                 className={`text-xl lg:text-2xl font-bold ${
@@ -1055,7 +1045,7 @@ const FinancialReports = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                مجموع باقیات (کرایه/خدمات)
+              Completed Tasks
               </p>
 
               <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
@@ -1079,8 +1069,7 @@ const FinancialReports = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                مجموع معاشات باقی مانده {/* Changed title */}
-              </p>
+               Canceled Tasks</p>
               <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
                 {isLoading && totalSalaryReminder === 0 && !error ? (
                   <FaSpinner className="animate-spin text-rose-500" />
@@ -1089,81 +1078,16 @@ const FinancialReports = () => {
                 )}
               </h3>
             </div>
-            <div className="bg-rose-100 p-3 rounded-full">
-              {" "}
-              {/* Changed color */}
-              <FiUserMinus className="text-rose-500 text-lg" />{" "}
-              {/* Changed icon and color */}
-            </div>
           </div>
         </div>
 
-        {/* Active Shops Card */}
-        <div className="bg-white p-5 rounded-xl shadow-sm border-l-4 border-orange-500 transition-shadow hover:shadow-md">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                دکان های فعال
-              </p>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
-                {isLoading && !extraSummary.activeShops ? (
-                  <FaSpinner className="animate-spin text-orange-500" />
-                ) : (
-                  extraSummary.activeShops
-                )}
-              </h3>
-            </div>
-            <div className="bg-orange-100 p-3 rounded-full">
-              <FiHome className="text-orange-500 text-lg" />
-            </div>
-          </div>
-        </div>
-        {/* Total Customers Card */}
-        <div className="bg-white p-5 rounded-xl shadow-sm border-l-4 border-purple-500 transition-shadow hover:shadow-md">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                مجموع مشتریان
-              </p>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
-                {isLoading && !extraSummary.totalCustomers ? (
-                  <FaSpinner className="animate-spin text-purple-500" />
-                ) : (
-                  extraSummary.totalCustomers
-                )}
-              </h3>
-            </div>
-            <div className="bg-purple-100 p-3 rounded-full">
-              <FiUsers className="text-purple-500 text-lg" />
-            </div>
-          </div>
-        </div>
-        {/* Active Agreements Card */}
-        <div className="bg-white p-5 rounded-xl shadow-sm border-l-4 border-teal-500 transition-shadow hover:shadow-md">
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-xl text-gray-500 mb-1 uppercase font-medium">
-                قراردادهای فعال
-              </p>
-              <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
-                {isLoading && !extraSummary.activeAgreements ? (
-                  <FaSpinner className="animate-spin text-teal-500" />
-                ) : (
-                  extraSummary.activeAgreements
-                )}
-              </h3>
-            </div>
-            <div className="bg-teal-100 p-3 rounded-full">
-              <FiClipboard className="text-teal-500 text-lg" />
-            </div>
-          </div>
-        </div>
+
       </div>
 
       {/* Bar and Pie Charts Section */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6"> */}
         {/* Bar Chart */}
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+        {/* <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
           <h3 className="text-xl font-semibold mb-4 text-gray-800">
             عواید ماهانه در مقابل مصارف
           </h3>
@@ -1246,9 +1170,9 @@ const FinancialReports = () => {
               </ResponsiveContainer>
             )}
           </div>
-        </div>
+        </div> */}
         {/* Pie Chart */}
-        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+        {/* <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
           <h3 className="text-xl font-semibold mb-4 text-gray-800">
             توزیع منابع درآمد
           </h3>
@@ -1335,11 +1259,11 @@ const FinancialReports = () => {
               </ResponsiveContainer>
             )}
           </div>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
 
       {/* Area Chart: Monthly Overview */}
-      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
+      {/* <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200">
         <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-2">
           <h3 className="text-xl sm:text-xl font-semibold text-gray-800">
             نمای کلی مالی ماهانه (گراف)
@@ -1509,10 +1433,10 @@ const FinancialReports = () => {
             </ResponsiveContainer>
           )}
         </div>
-      </div>
+      </div> */}
 
       {/* Detailed Transactions Table Section */}
-      <div
+      {/* <div
         id="fr_transaction-table"
         className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-200"
       >
@@ -1686,7 +1610,7 @@ const FinancialReports = () => {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

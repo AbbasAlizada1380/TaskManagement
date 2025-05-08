@@ -1,24 +1,25 @@
-import AddingTasks from "./pages/AddingTasks"
-import PickingTasks from "./pages/PickingTasks"
-import OfficeNotes from "./pages/OfficeNotes"
-import PersonalNotes from "./pages/PersonalNotes"
+import AddingTasks from "./pages/AddingTasks";
+import PickingTasks from "./pages/PickingTasks";
+import OfficeNotes from "./pages/OfficeNotes";
+import PersonalNotes from "./pages/PersonalNotes";
+import FinancialReports from "./pages/report/FinancialReports";
 const MainContent = ({ activeComponent }) => {
   const renderContent = () => {
     switch (activeComponent) {
- case "home":
-    return <Home />;
+      case "home":
+        return <FinancialReports />;
 
-  case "AddingTasks":
-    return <AddingTasks />;
+      case "AddingTasks":
+        return <AddingTasks />;
 
-  case "PickingTasks":
-    return <PickingTasks />;
+      case "PickingTasks":
+        return <PickingTasks />;
 
-  case "OfficeNotes":
-    return <OfficeNotes />;
+      case "OfficeNotes":
+        return <OfficeNotes />;
 
-  case "PersonalNotes":
-    return <PersonalNotes />;
+      case "PersonalNotes":
+        return <PersonalNotes />;
       // case "report":
       //   return <Report />;
       // case "Salaries":
@@ -44,7 +45,7 @@ const MainContent = ({ activeComponent }) => {
       // case "RentManger":
       //   return <Rent />;
       default:
-        return "new dashboard";
+        return <FinancialReports />;
     }
   };
 
